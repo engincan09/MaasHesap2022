@@ -8,7 +8,7 @@ namespace MaasHesap2022.Entity.GelirVergisiDilimleri
     /// <summary>
     /// 2022 yılı gelir vergisi dilimleri ücret gelirleri tutulduğu tablodur.
     /// </summary>
-    public class GelirVergisiDilimleri : BaseEntity
+    public class GelirVergisiDilim : BaseEntity
     {
         /// <summary>
         /// Gelir Dilimi başlık
