@@ -38,3 +38,55 @@ Başlangıçta %50 oranını alır. Eş çalıştığı için eş oranı eklenme
 <ul>
 <li>5.000 x 0,15 x 0,50 = 375 TL</li>
 </ul>
+ 
+ -------------------------------------------------
+ 
+ Gelir vergisini ve asgari ücret gelir vergisi İstisnasını hesaplayabilmek için 2022 yılı gelir vergisi dilimlerine ihtiyacımız olacaktır. 
+ 
+Gelir Dilimi,Vergi Oranı
+32.000 TL’ye kadar, 15%
+70.000 TL’nin 32.000 TL’si için 4800 TL. Fazlası, 20%
+250.000 TL’nin 70.000 TL’si için 12.400 TL. Fazlası, 27%
+880.000 TL’nin 250.000 TL’si için 61.000 TL. Fazlası, 35%
+880.000 TL’den fazlasının 880.000 TL’si için 281.500 TL. Fazlası, 40%
+ 
+ <table>
+    <tr>
+     <th>
+         Gelir Dilimi
+     </th>
+    <th>
+        Vergi Oranı
+     </th>
+    </tr>
+  <tr>
+    <td>32.000 TL’ye kadar</td>
+    <td>15%</td>
+  </tr>
+   <tr>
+    <td>70.000 TL’nin 32.000 TL’si için 4800 TL. Fazlası</td>
+    <td>20%</td>
+  </tr>
+  <tr>
+    <td>250.000 TL’nin 70.000 TL’si için 12.400 TL. Fazlası</td>
+    <td>70%</td>
+  </tr>
+  <tr>
+   <td>
+   880.000 TL’nin 250.000 TL’si için 61.000 TL. Fazlası
+   </td>
+     <td>
+   35%
+   </td>
+  </tr>
+  <tr>
+   <td>
+  880.000 TL’den fazlasının 880.000 TL’si için 281.500 TL. Fazlası
+   </td>
+     <td>
+   40%
+   </td>
+  </tr>
+ </table>
+ 
+ 
