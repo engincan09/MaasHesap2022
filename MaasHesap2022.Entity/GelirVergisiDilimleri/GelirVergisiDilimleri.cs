@@ -33,6 +33,6 @@ namespace MaasHesap2022.Entity.GelirVergisiDilimleri
         /// <summary>
         /// Yil
         /// </summary>
-        public decimal Yil { get; set; }
+        public string Yil { get; set; }
     }
 }
