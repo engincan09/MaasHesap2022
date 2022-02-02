@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="EfCore\Abstract\" />
-    <Folder Include="EfCore\Concrete\" />
+    <ProjectReference Include="..\MaasHesap2021.Dal\MaasHesap2022.Dal.csproj" />
   </ItemGroup>
 
 </Project>
