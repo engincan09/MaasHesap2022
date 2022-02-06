@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MaasHesap2021.Dal\MaasHesap2022.Dal.csproj" />
+    <ProjectReference Include="..\MaasHesap2022.Dto\MaasHesap2022.Dto.csproj" />
   </ItemGroup>
 
 </Project>
