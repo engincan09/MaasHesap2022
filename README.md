@@ -1,5 +1,15 @@
 # MaasHesap2022
-2022 Yılı Brütten Nete Maaş Hesaplama Uygulaması
+~ 2022 Yılı Brütten Nete Maaş Hesaplama Uygulaması <br>
+
+<h3>Tanımlar </h3>
+- Asgari Geçim İndirimi: İşçinin kendisiyle beraber bakmakla yükümlü olduğu kişiler için verilen vergi indirimlerine verilen isimdir <br>
+- Vergi Dilimi: Çalışanların gelirleri (ücretleri) oranında devlete ödemekle yükümlü oldukları vergi oranını belirleyen tarifedir. <br>
+- Gelir Vergisi İstisnası: Asgari ücrete kadar kazancı olan işçilerden gelir vergisinin kaldırılması. <br>
+- Brüt Ücret: Çalışana ödenen paranın kesinti ve vergiler yapılmadan olan haline brüt ücret denilmektedir <br>
+- Gelir Vergisi Matrahı: Sigortalı olarak çalışan işçinin aylık brüt ücretinden Genel Sağlık Sigortası ve İşsizlik Sigortası işçi payı gibi kesintilerin çıkarıldıktan sonraki halidir. <br>
+
+
+
 
 Asgari geçim indirimi, hesaplama yapılan yılın yıllık brüt asgari ücret tutarının %15’inin çalışanın evli olma, eşin çalışması ve çocuk sayısı durumlarına göre aşağıdaki oranların toplamı olacak şekilde çarpımından elde edilir.
 
