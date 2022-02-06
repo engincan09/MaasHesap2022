@@ -5,12 +5,14 @@ using MaasHesap2022.Bll.EfCore.Abstract.SgkMatrahTavanlar;
 using MaasHesap2022.Dal.EfCore;
 using MaasHesap2022.Dal.EfCore.Concrete;
 using MaasHesap2022.Dal.Extensions;
+using MaasHesap2022.Dto.GelirVergsiDto;
 using MaasHesap2022.Dto.SgkDto;
 using MaasHesap2022.Entity.Bordrolar;
 using MaasHesap2022.Entity.BrutAsgariUcret;
 using MaasHesap2022.Entity.GelirVergisiDilimleri;
 using MaasHesap2022.Entity.SgkMatrah;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MaasHesap2022.Bll.EfCore.Concrete.Bordrolar
 {
@@ -37,10 +39,59 @@ namespace MaasHesap2022.Bll.EfCore.Concrete.Bordrolar
 
 
 
+        /// <summary>
+        /// Gelir vergisini döndürür.
+        /// </summary>
+        /// <param name="brutUcret"></param>
+        /// <param name="sgkIsci"></param>
+        /// <param name="issizlikIsci"></param>
+        /// <param name="kumulatifGelirVergisiMatrahi"></param>
+        /// <param name="yil"></param>
+        /// <returns></returns>
+        private GelirVergisiResponseDto HesaplaGelirVergisi(decimal brutUcret, decimal sgkIsci, decimal issizlikIsci, decimal kumulatifGelirVergisiMatrahi, int yil)
+        {
+            GelirVergisiResponseDto response = new GelirVergisiResponseDto();
+            var gelirVergisiDilimListesi = GetGelirVergisiDilimler(yil);
 
+            decimal gelirVergisiMatrahi = brutUcret - sgkIsci - issizlikIsci.Round();
+            decimal toplamMatrah = kumulatifGelirVergisiMatrahi + gelirVergisiMatrahi;
 
+            //Vergi oranını hesaplamak için gelir vergisinin hangi dilimde olduğuna bakıyoruz.
+            foreach (var dilim in gelirVergisiDilimListesi)
+            {
 
+                if (dilim.AltDilim <= kumulatifGelirVergisiMatrahi && dilim.UstDilim > kumulatifGelirVergisiMatrahi)
+                {
+                    //Kümülatif gelir vergisi ile işlem yapılan ayın gelir vergisi toplanır ve toplam tutarın hangi veri diliminde olduğuna bakılır
+                    if (kumulatifGelirVergisiMatrahi + gelirVergisiMatrahi <= dilim.UstDilim)
+                    {
+                        response.GelirVergisiDilimList.Add(new GelirVergisiDilimResponseDto
+                        {
+                            GelirVergisiMatrahi = gelirVergisiMatrahi,
+                            GelirVergisiOrani = dilim.Oran,
+                            GelirVergisi = (gelirVergisiMatrahi * dilim.Oran).Round()
+                        });
+                        break;
+                    }
+                    else
+                    {
+                        decimal dilimMatrah = dilim.UstDilim - kumulatifGelirVergisiMatrahi;
 
+                        response.GelirVergisiDilimList.Add(new GelirVergisiDilimResponseDto
+                        {
+                            GelirVergisiMatrahi = dilimMatrah,
+                            GelirVergisiOrani = dilim.Oran,
+                            GelirVergisi = (dilimMatrah * dilim.Oran).Round()
+                        });
+                        kumulatifGelirVergisiMatrahi = dilim.UstDilim;
+                        gelirVergisiMatrahi = kumulatifGelirVergisiMatrahi + gelirVergisiMatrahi - kumulatifGelirVergisiMatrahi;
+                    }
+                }
+            }
+            response.GelirVergisi = response.GelirVergisiDilimList.Sum(x => x.GelirVergisi);
+            response.GelirVergisiMatrahi = response.GelirVergisiDilimList.Sum(x => x.GelirVergisiMatrahi);
+            return response;
+        }
 
         /// <summary>
         /// Sgk işci ücreti hesabı döndürür.
@@ -104,9 +155,9 @@ namespace MaasHesap2022.Bll.EfCore.Concrete.Bordrolar
         /// Gelir vergisi dilimlerini döndürür.
         /// </summary>
         /// <returns></returns>
-        private List<GelirVergisiDilim> GetGelirVergisiDilimler()
+        private List<GelirVergisiDilim> GetGelirVergisiDilimler(int yil)
         {
-            return _gelirVergisiDilimlerRepository.GetAll();
+            return _gelirVergisiDilimlerRepository.GetAll(m => m.Yil == yil.ToString());
         }
 
         /// <summary>
@@ -124,10 +175,8 @@ namespace MaasHesap2022.Bll.EfCore.Concrete.Bordrolar
         /// <returns></returns>
         private decimal GetYilaGoreSgkMatrahTavan(int yil)
         {
-            return _sgkMatrahTavanRepository.Get(m=> m.Yil == yil.ToString()).Tutar;
+            return _sgkMatrahTavanRepository.Get(m => m.Yil == yil.ToString()).Tutar;
         }
-
-
 
         /// <summary>
         /// Brut asgari ücret bilgilerini döndürür.
@@ -136,6 +185,16 @@ namespace MaasHesap2022.Bll.EfCore.Concrete.Bordrolar
         private List<BrutAsgariUcret> GetBrutAsgariUcretler()
         {
             return _brutAsgariUcretRepository.GetAll();
+        }
+
+        /// <summary>
+        /// Damga vergisi
+        /// </summary>
+        /// <param name="brutUcret"></param>
+        /// <returns></returns>
+        private  decimal HesaplaDamgaVergisi(decimal brutUcret)
+        {
+            return (brutUcret * DamgaVergisiOran).Round();
         }
     }
 }
